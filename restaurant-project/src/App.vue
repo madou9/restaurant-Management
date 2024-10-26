@@ -1,10 +1,10 @@
-<script setup>
-  import SignUp from './components/SignUp.vue';
-</script>
-
 <template>
-  <main>
-    <SignUp />
-  </main>
+  <RouterView />
 </template>
+
+<script> 
+    export default {
+        name: 'App'
+    }
+</script>
 
