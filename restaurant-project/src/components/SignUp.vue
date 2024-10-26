@@ -1,15 +1,19 @@
 <template>
-    <img alt="hero" class="logo" src="../assets/hero.png"/>
-    <h1>Sign Up</h1>
-    <div class="register">
-        <input type="text" v-model="name" placeholder="Enter Name"/>
-        <input type="text" v-model="email" placeholder="Enter Email"/>
-        <input type="password" v-model="password" placeholder="Enter Password"/>
-        <button v-on:click="signUp">Sign Up</button>
+    <div class="signup-container">
+        <img alt="hero" class="logo" src="../assets/hero.png"/>
+        <h1>Sign Up</h1>
+        <div class="register">
+            <input type="text" v-model="name" placeholder="Enter Name" />
+            <input type="text" v-model="email" placeholder="Enter Email" />
+            <input type="password" v-model="password" placeholder="Enter Password" />
+            <button v-on:click="signUp">Sign Up</button>
+        </div>
     </div>
 </template>
+
 <script>
- import axios from 'axios';
+import axios from 'axios';
+
 export default {
     name: 'SignUp',
     data() {
@@ -21,29 +25,41 @@ export default {
     },
     methods: {
         async signUp() {
-            let result = await axios.post('http://localhost:3000/users', {
-                name: this.name,
-                email: this.email,
-                password: this.password
-            }); 
-            console.log(result);
-            if (result.status === 201) {
-                alert('User created successfully');
-                localStorage.setItem('user-info', JSON.stringify(result.data));
+            if (!this.name || !this.email || !this.password) {
+                alert("Please fill in all fields");
+                return;
+            }
+
+            try {
+                let result = await axios.post('http://localhost:3000/users', {
+                    name: this.name,
+                    email: this.email,
+                    password: this.password
+                });
+
+                if (result.status === 201) {
+                    localStorage.setItem('user-info', JSON.stringify(result.data)); // Save user info in local storage
+                    this.$router.push({ name: 'Home' }); // Redirect to Home page
+                    this.name = '';
+                    this.email = '';
+                    this.password = '';
+                }
+            } catch (error) {
+                console.error("Error signing up:", error);
+                alert("There was an issue signing up. Please try again.");
             }
         }
+    }
 }
-}
-
 </script>
 
 <style>
-h1 {
+.signup-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     text-align: center;
-    margin: 20px 0;
+    padding: 20px;
 }
 
 .logo {
@@ -51,7 +67,12 @@ h1 {
     height: 200px;
     object-fit: cover;
 }
-.register input{
+
+h1 {
+    margin: 20px 0;
+}
+
+.register input {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -59,7 +80,7 @@ h1 {
     border-radius: 5px;
 }
 
-.register button{
+.register button {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
