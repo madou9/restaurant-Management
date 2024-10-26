@@ -49,6 +49,13 @@ export default {
                 alert("There was an issue signing up. Please try again.");
             }
         }
+    },
+    // Redirect to Home page if user is already logged in
+    mounted() {
+        let user = localStorage.getItem('user-info');
+        if (user) {
+            this.$router.push({ name: 'Home' });
+        }
     }
 }
 </script>
