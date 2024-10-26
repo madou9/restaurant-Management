@@ -9,6 +9,27 @@
 </script>
 
 <style>
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%; /* Ensure the body takes up the full height */
+}
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100%; /* Ensures #app container spans full width */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #2c3e50;
+    min-height: 100vh;
+    width: 100%;
+}
+
 .signup-container {
     display: flex;
     flex-direction: column;
