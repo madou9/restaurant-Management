@@ -13,6 +13,7 @@
                     <th>Name</th>
                     <th>Contact</th>
                     <th>Address</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,6 +22,10 @@
                     <td>{{ item.name }}</td>
                     <td>{{ item.contact }}</td>
                     <td>{{ item.address }}</td>
+                    <td>
+                        <router-link :to="'/update/' + item.id">Update</router-link>
+                        <button v-on:click="deleteRestaurant(item.id)">Delete</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -43,8 +48,17 @@ export default {
     components: {
         Header
     },
-    async mounted() {
-        // Redirect to SignUp if no user info is found in localStorage
+    methods:{
+        async deleteRestaurant(id){
+            let result = await axios.delete('http://localhost:3000/restaurants/' + id);
+            console.warn(result);
+            if (result.status === 200) {
+
+                this.loadData();
+            }
+        },
+        async loadData(){
+            // Redirect to SignUp if no user info is found in localStorage
         let user = localStorage.getItem('user-info');
         if (user) {
             this.name = JSON.parse(user).name;
@@ -61,6 +75,10 @@ export default {
         } catch (error) {
             console.error("Error fetching restaurants:", error);
         }
+        }
+    },
+    async mounted() {
+        this.loadData();
     },
 }
 </script>
