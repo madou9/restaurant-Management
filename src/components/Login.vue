@@ -1,7 +1,7 @@
 <template>
     
     <div class="signup-container">
-        <img alt="hero" class="logo" src="../assets/hero.png"/>
+        <img alt="hero" class="logo" src="../assets/hero.jpg"/>
         <h1>Login</h1>
         <div class="login">
             <!-- <input type="text" v-model="name" placeholder="Enter Name" /> -->
